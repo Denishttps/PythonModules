@@ -1,7 +1,7 @@
 
 
 class Plant:
-    def __init__(self, name, height, age):
+    def __init__(self, name: str, height: int, age: int):
         self.name = name
         self.height = height
         self.plant_age = age
@@ -9,10 +9,10 @@ class Plant:
     def get_info(self):
         print(f"{self.name}: {self.height}cm, {self.plant_age} days old")
 
-    def grow(self, days):
+    def grow(self, days: int):
         self.height += days
 
-    def age(self, days):
+    def age(self, days: int):
         self.plant_age += days
 
 

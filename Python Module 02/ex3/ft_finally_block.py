@@ -1,4 +1,4 @@
-def water_plants(plants):
+def water_plants(plants: list[str]):
     try:
         print("Opening watering system")
         for plant in plants:

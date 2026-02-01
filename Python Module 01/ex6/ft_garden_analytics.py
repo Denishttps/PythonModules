@@ -1,6 +1,6 @@
 
 class Plant:
-    def __init__(self, name, height):
+    def __init__(self, name: str, height: int):
         self.name = name
         self.height = height
         self.growth = 0
@@ -15,7 +15,7 @@ class Plant:
 
 
 class FloweringPlant(Plant):
-    def __init__(self, name, height, color):
+    def __init__(self, name: str, height: int, color: str):
         super().__init__(name, height)
         self.color = color
         self.is_blooming = False
@@ -28,7 +28,7 @@ class FloweringPlant(Plant):
 
 
 class PrizeFlower(FloweringPlant):
-    def __init__(self, name, height, color, prize_points):
+    def __init__(self, name: str, height: int, color: str, prize_points: int):
         super().__init__(name, height, color)
         self.prize_points = prize_points
 
@@ -37,11 +37,11 @@ class PrizeFlower(FloweringPlant):
 
 
 class Garden:
-    def __init__(self, owner):
+    def __init__(self, owner: str):
         self.owner = owner
         self.plants = []
 
-    def add_plant(self, plant):
+    def add_plant(self, plant: Plant):
         self.plants.append(plant)
         print(f"Added {plant.name} to {self.owner}'s garden")
 
@@ -84,7 +84,7 @@ class GardenManager:
     def __init__(self):
         pass
 
-    def add_garden(self, garden):
+    def add_garden(self, garden: Garden):
         self.gardens.append(garden)
 
     @classmethod

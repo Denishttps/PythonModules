@@ -1,6 +1,6 @@
-name = "Garden of dbobrov"
-height = 10
-age = 5
+name: str = "Garden of dbobrov"
+height: int = 10
+age: int = 5
 
 if __name__ == "__main__":
     print(

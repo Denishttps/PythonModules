@@ -13,14 +13,14 @@ class WaterError(GardenError):
         return "Not enough water in the tank!"
 
 
-def water_plant(water_level):
+def water_plant(water_level: int):
     if water_level == 0:
         raise WaterError()
     print("Water the plant")
     return water_level - 1
 
 
-def check_plants(water_level, plants_amount):
+def check_plants(water_level: int, plants_amount: int):
     if water_level < plants_amount:
         raise PlantError()
     print("Plants status [OK]")

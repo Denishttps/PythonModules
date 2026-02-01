@@ -1,4 +1,4 @@
-def garden_operations(action):
+def garden_operations(action: str):
     if action == "value":
         int("str")
     elif action == "zero":
