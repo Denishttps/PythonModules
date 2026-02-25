@@ -11,7 +11,6 @@ class DataProcessor(ABC):
     def validate(self, data: Any) -> bool:
         ...
 
-    @abstractmethod
     def format_output(self, result: str) -> str:
         return "[OUTPUT] " + result
 
@@ -22,16 +21,13 @@ class TextProcessor(DataProcessor):
         if self.validate(data):
             return self.format_output(
                 f"Processed text: {len(data)} characters, "
-                f"{len(data.split(" "))} words"
+                f"{len(data.split(' '))} words"
             )
-        raise TypeError(f"Musst be str not {data.__class__.__name__}")
+        raise TypeError(f"Must be str not {data.__class__.__name__}")
 
     def validate(self, data) -> bool:
         print(self.format_output("Validation: Text data verified"))
         return isinstance(data, str)
-
-    def format_output(self, result: str) -> str:
-        return super().format_output(result)
 
 
 class NumericProcessor(DataProcessor):
@@ -42,7 +38,7 @@ class NumericProcessor(DataProcessor):
                 f"Processed {len(data)} numeric values, "
                 f"sum={sum(data)}, avg={sum(data) / len(data)}"
             )
-        raise TypeError("Musst be list of int")
+        raise TypeError("Must be list of int")
 
     def validate(self, data: list[int]) -> bool:
         print(self.format_output("Validation: Numeric data verified"))
@@ -91,6 +87,14 @@ def main():
     print(log.process("ERROR: Connection timeout"))
 
     print("\n== Polymorphic Processing Demo ===")
+
+    processors: list[DataProcessor] = [num, string, log]
+    for processor in processors:
+        print(f"Processing with {processor.__class__.__name__}")
+        try:
+            processor.process("Sample Data")
+        except Exception as e:
+            print(f"Error: {e}")
 
 
 if __name__ == "__main__":
