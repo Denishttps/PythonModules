@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from collections import defaultdict
-from typing import Any, Dict, List, Optional, Protocol, Union
+from typing import Any, Dict, List, Protocol, Union
 
 
 class ProcessingStage(Protocol):
@@ -87,7 +87,7 @@ class CSVAdapter(ProcessingPipeline):
     def process(self, data: Any) -> Union[str, Any]:
         try:
             if isinstance(data, str):
-                lines = [l.strip() for l in data.strip().split("\n") if l.strip()]
+                lines = [i.strip() for i in data.strip().split("\n") if i.strip()]  # noqa: E501
                 actions = len(lines)
                 self.run_pipeline({"lines": lines})
                 self._processed_count += 1
@@ -106,7 +106,7 @@ class StreamAdapter(ProcessingPipeline):
     def process(self, data: Any) -> Union[str, Any]:
         try:
             if isinstance(data, list):
-                readings = [float(r) for r in data if isinstance(r, (int, float))]
+                readings = [float(r) for r in data if isinstance(r, (int, float))]  # noqa: E501
                 avg = sum(readings) / len(readings) if readings else 0.0
                 self.run_pipeline(readings)
                 self._processed_count += 1
