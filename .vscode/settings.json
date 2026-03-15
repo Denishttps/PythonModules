@@ -19,5 +19,8 @@
       "**/.hg": true,
       "**/.DS_Store": true,
       "**/Thumbs.db": true
+    },
+    "github.copilot.enable": {
+        "*": false
     }
 }
