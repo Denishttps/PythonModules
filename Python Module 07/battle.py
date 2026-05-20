@@ -24,7 +24,7 @@ def battle(factory1: CreatureFactory, factory2: CreatureFactory) -> None:
     print(c2.attack())
 
 
-if __name__ == "__main__":
+def main():
     flame_factory = FlameFactory()
     aqua_factory = AquaFactory()
 
@@ -33,3 +33,7 @@ if __name__ == "__main__":
     test_factory(aqua_factory)
     print()
     battle(flame_factory, aqua_factory)
+
+
+if __name__ == "__main__":
+    main()

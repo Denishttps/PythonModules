@@ -30,7 +30,7 @@ def battle(opponents: List[Tuple[CreatureFactory, BattleStrategy]]) -> None:
                 return
 
 
-if __name__ == "__main__":
+def main():
     flame_f = FlameFactory()
     aqua_f = AquaFactory()
     heal_f = HealingCreatureFactory()
@@ -53,3 +53,7 @@ if __name__ == "__main__":
     print("Tournament 2 (multiple)")
     print("[ (Aquabub+Normal), (Healing+Defensive), (Transform+Aggressive) ]")
     battle([(aqua_f, normal), (heal_f, defensive), (trans_f, aggressive)])
+
+
+if __name__ == "__main__":
+    main()
