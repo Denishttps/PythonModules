@@ -1,82 +1,84 @@
+"""
+Exercise 0: Entering the Matrix
+Detects virtual environment and displays Python environment info.
+"""
+
 import os
 import sys
 import site
 
-from typing import Optional
 
-
-_DEFAULT = "\033[{code}m"
-_RESET_COLOR = _DEFAULT.format(code=0)
-_RGB = "{};2;{};{};{}"
-
-
-def _validate_rgb(r: int, g: int, b: int):
-    for value in (r, g, b):
-        if not (0 <= value <= 255):
-            raise ValueError("RGB values must be in range 0–255")
-
-
-def rgb(
-        r: int,
-        g: int,
-        b: int,
-        text: Optional[str] = None,
-        background: bool = False
-) -> str:
-    _validate_rgb(r, g, b)
-    mode = 48 if background else 38
-    color = _DEFAULT.format(code=_RGB.format(mode, r, g, b))
-    if text is not None:
-        return f"{color}{text}{_RESET_COLOR}"
-    return color
-
-
-def in_venv() -> None:
-    user_site_packages = site.getusersitepackages()
-    print(
-        f"Environment Path: {os.getenv('VIRTUAL_ENV')}",
-        "",
-        f"{rgb(0, 255, 0, 'SUCCESS')}:  You're in an isolated environment!",
-        "Safe to install packages without affecting the global system.",
-        "",
-        f"Package installation path: {rgb(0, 100, 255, user_site_packages)}",
-        sep="\n"
+def is_virtual_env() -> bool:
+    """Check if running inside a virtual environment."""
+    return (
+        hasattr(sys, "real_prefix")
+        or (
+            hasattr(sys, "base_prefix")
+            and sys.base_prefix != sys.prefix
+        )
     )
 
 
-def notify_global_usage() -> None:
-    print(
-        "",
-        f"{rgb(255, 255, 0, 'WARNING')}: You're in the global environment!",
-        "The machines can see everything you install",
-        "",
-        "To enter the construct, run:",
-        rgb(0, 255, 255, "python -m venv matrix_env"),
-        rgb(0, 255, 255, "source matrix_env/bin/activate ") + "# On Unix",
-        rgb(0, 255, 255, "matrix_venv/Scripts/activate ") + "# On Windows",
-        "",
-        "Then run this program again.",
-        sep="\n"
-    )
+def get_venv_name() -> str:
+    """Return the name of the current virtual environment."""
+    venv_path = os.environ.get("VIRTUAL_ENV", "")
+    if venv_path:
+        return os.path.basename(venv_path)
+    return ""
 
 
-def main():
-    print(f"{rgb(255, 100, 100, 'MATRIX STATUS')}: You're still plugged in")
+def get_package_path() -> str:
+    """Return the site-packages path for the current environment."""
+    packages = site.getsitepackages()
+    if packages:
+        return packages[0]
+    return site.getusersitepackages()
 
+
+def show_outside_venv() -> None:
+    """Display info when running outside a virtual environment."""
+    print("MATRIX STATUS: You're still plugged in")
     print()
+    print(f"Current Python: {sys.executable}")
+    print("Virtual Environment: None detected")
+    print()
+    print("WARNING: You're in the global environment!")
+    print("The machines can see everything you install.")
+    print()
+    print("To enter the construct, run:")
+    print("  python -m venv matrix_env")
+    print("  source matrix_env/bin/activate  # On Unix")
+    print("  matrix_env\\Scripts\\activate     # On Windows")
+    print()
+    print("Then run this program again.")
 
-    is_venv = sys.prefix != sys.base_prefix
-    venv_name = os.getenv("VIRTUAL_ENV")
-    if venv_name:
-        venv_name = venv_name.split("/")[-1]
 
-    print(f"Current Python: {rgb(0, 100, 255, sys.executable)}")
-    print(f"Virtual Environment: {venv_name if is_venv else 'None detected'}")
+def show_inside_venv() -> None:
+    """Display info when running inside a virtual environment."""
+    venv_name = get_venv_name()
+    venv_path = os.environ.get("VIRTUAL_ENV", "")
+    package_path = get_package_path()
 
-    if is_venv:
-        in_venv()
+    print("MATRIX STATUS: Welcome to the construct")
+    print()
+    print(f"Current Python: {sys.executable}")
+    print(f"Virtual Environment: {venv_name}")
+    print(f"Environment Path: {venv_path}")
+    print()
+    print("SUCCESS: You're in an isolated environment!")
+    print("Safe to install packages without affecting")
+    print("the global system.")
+    print()
+    print("Package installation path:")
+    print(f"  {package_path}")
+
+
+def main() -> None:
+    """Main entry point."""
+    if is_virtual_env():
+        show_inside_venv()
     else:
-        notify_global_usage()
+        show_outside_venv()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,15 @@
+# .env contains real secrets (API keys, passwords, tokens).
+# NEVER commit it — anyone with repo access could steal credentials.
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+matrix_env/
+venv/
+.venv/
+
+# Generated output files
+*.png
